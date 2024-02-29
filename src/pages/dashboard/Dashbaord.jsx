@@ -1,22 +1,19 @@
 import React, { useState } from 'react'
 import Dashlink from '../../components/Dashlink'
-import { Outlet } from 'react-router-dom'
-import { IoLibraryOutline, IoBookOutline } from "react-icons/io5";
-import { RiSettingsLine } from "react-icons/ri";
-import { GoInbox } from "react-icons/go";
+import { Outlet, useLocation } from 'react-router-dom'
 import Inbox from '../../components/Inbox';
-import { Trash2 } from 'lucide-react';
-
+import { Trash2, Inbox as LInbox, Bolt, BookOpenText, Library as Shelf } from 'lucide-react';
+import Tablink from '../../components/Tablink';
 const Dashbaord = () => {
   const [isInbox, setIsInbox] = useState(false)
   const [isReadMessage, setIsReadMessage] = useState(false)
   const [textToRead, setTextToRead] = useState(false)
-
+  const { pathname } = useLocation()
   const messages = [
     {
       from: 'Delwar',
       sub: 'Share request',
-      text: "    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia ex sint error voluptatem voluptatum magnam dolorem asperiores, voluptates, ullam in quis totam deserunt! Quasi reprehenderit laudantium neque ab adipisci dolore.",
+      text: "    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia ex sint error voluptatem voluptatum magnam dolorem asperiores, voluptates, ullam in quis totam deserunt! Quasi reprehenderit laudantium neque ab adipisci dolore. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia ex sint error voluptatem voluptatum magnam dolorem asperiores, voluptates, ullam in quis totam deserunt! Quasi reprehenderit laudantium neque ab adipisci dolore.",
       unread: true
     },
     {
@@ -40,22 +37,21 @@ const Dashbaord = () => {
     setTextToRead(message)
   }
   return (
-    <div className='flex'>
+    <div className='flex min-h-screen'>
       <Inbox showInbox={isInbox} firstTime={firstTime}>
-
-        <div className={`${isReadMessage || 'hidden'} absolute w-full  top-0 -left-full h-[320px] border rounded-md py-4 pt-0 bg-white`}>
-          <div className='border-b py-2 px-2'>
+        <div className={`cs-shadow ${isReadMessage || 'hidden'} absolute w-full top-0 -left-full h-[320px] border rounded-md py-4 pt-0 bg-white overflow-y-auto overscroll-contain`}>
+          <div className='border-b py-2 px-4'>
             <button className='ml-auto block w-fit'>
               <Trash2 size={20} strokeWidth={1.5} />
             </button>
           </div>
-          <h2 className='font-medium px-4'>{textToRead.from}</h2>
-          <h3 className='font-medium border-b pb-2 mb-2 px-4'>{textToRead.sub}</h3>
-          <p className='px-4'>{textToRead.text}</p>
+          <h2 className='font-medium px-6'>{textToRead.from}</h2>
+          <h3 className='font-medium border-b pb-2 mb-2 px-6'>{textToRead.sub}</h3>
+          <p className='px-6'>{textToRead.text}</p>
 
         </div>
 
-        <div className='space-y-4 p-4 w-[350px]'>
+        <div className='space-y-4 p-4 w-[350px] cs-shadow'>
           {
             messages.length === 0 ? <h2 className='text-center text-lg text-neutral-300'>no message found</h2> : messages.map((message, i) => {
               return (
@@ -86,21 +82,28 @@ const Dashbaord = () => {
             </div>
 
             <div className={` flex mb-1 justify-between items-center cursor-pointer py-[6px] px-4 rounded-md transition-color hover:bg-neutral-50`} onClick={handleInbox}>
-              <p className={`flex items-center gap-2`}> <GoInbox />Inbox</p>
+              <p className={`flex items-center gap-2`}> <LInbox size={18} />Inbox</p>
               <span className={`font-medium w-5 h-5 rounded-full bg-black text-white grid items-center justify-center text-sm transition-color`}>1</span>
             </div>
           </div>
           <div className='mt-20'>
             <h2 className='ml-4 account-type font-medium text-lg mb-5'>Dashboard</h2>
-            <Dashlink to='/' className='flex gap-2 items-center mb-1'><IoLibraryOutline />Book Shelf</Dashlink>
-            <Dashlink className='flex gap-2 items-center mb-1' to='/borrow'><IoBookOutline />Borrow</Dashlink>
-            <Dashlink className='flex gap-2 items-center mb-1' to='/access'><RiSettingsLine />Access</Dashlink>
+            <Dashlink to='/' className='flex gap-2 items-center mb-1'><Shelf size={18} />My Book Shelf</Dashlink>
+            <Dashlink className='flex gap-2 items-center mb-1' to='/library'><BookOpenText size={18} />Library</Dashlink>
+            <Dashlink className='flex gap-2 items-center mb-1' to='/access'><Bolt size={18} />Access</Dashlink>
           </div>
         </div>
       </div >
       <div className='divider h- w-[1px] bg-neutral-200'></div>
       <div className='w-[80%]' onClick={() => setIsInbox(false)}>
-        <div className='content w-[90%] mx-auto'>
+        <div className='content w-[90%] mx-auto mb-8'>
+          {
+            (pathname.includes('browser') || pathname.includes('library')) &&
+            <div className='bg-neutral-100 w-fit px-1 py-1 rounded-md mb-4 flex'>
+              <Tablink to='/library'>Discover</Tablink>
+              <Tablink to='/browser'>Browse</Tablink>
+            </div>
+          }
           <Outlet />
         </div>
       </div>

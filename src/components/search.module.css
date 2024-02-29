@@ -1,5 +1,6 @@
 .show {
   animation: animate 0.2s forwards;
+  box-shadow: rgba(99, 99, 99, 0.123) 0px 2px 2px 0px;
 }
 
 .hide {

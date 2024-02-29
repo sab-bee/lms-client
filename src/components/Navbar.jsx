@@ -1,16 +1,30 @@
 import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import Popover from './Popover'
+import Search from './search'
 
 const Navbar = ({ children }) => {
   const { pathname } = useLocation()
   const [profilePop, setProfilePop] = useState(false)
   const [firstTime, setFirstTime] = useState(true)
+  const [firstTimeSearch, setFirstTimeSearch] = useState(true)
+  const [searchPop, setSearchPop] = useState(false)
+
 
   function handlePop(e) {
     e.stopPropagation()
     setProfilePop(!profilePop)
     setFirstTime(false)
+  }
+
+  function handleSearch(e) {
+    const value = e.target.value;
+    if (value.length > 0) {
+      setSearchPop(true);
+    } else {
+      setSearchPop(false);
+    }
+    setFirstTimeSearch(false)
   }
 
   return (
@@ -20,7 +34,7 @@ const Navbar = ({ children }) => {
           <div className='flex justify-between items-center h-28'>
             <div>icon</div>
             <div>
-              <div className='flex gap-x-12 items-center'>
+              <div className='flex gap-x-4 items-center'>
                 <div className='relative'>
                   <svg
 
@@ -38,7 +52,14 @@ const Navbar = ({ children }) => {
                     <circle cx="11" cy="11" r="8"></circle>
                     <path d="m21 21-4.3-4.3"></path>
                   </svg>
-                  <input type="text" className='h-9 border rounded-md px-8 w-[250px] outline-none focus:bg-neutral-50 placeholder:-translate-y-[2px]' placeholder='quick search' />
+                  <input type="text" className='h-9 border rounded-md px-8 w-[250px] outline-none focus:bg-neutral-50 placeholder:-translate-y-[2px] shadow shadow-[rgba(0,0,0,0.04)]' placeholder='quick search' onChange={handleSearch} />
+                  {
+                    <Search searchPop={searchPop} firstTimeSearch={firstTimeSearch}>
+                      <div className='p-4'>
+                        hello
+                      </div>
+                    </Search>
+                  }
                 </div>
 
                 <div className='cursor-pointer' onClick={handlePop}>
