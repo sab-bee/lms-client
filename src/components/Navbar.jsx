@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Popover from './Popover'
 import Search from './search'
+import { useAuth } from '../utils/auth'
+import { LogOut } from 'lucide-react'
 
 const Navbar = ({ children }) => {
   const { pathname } = useLocation()
@@ -9,7 +11,8 @@ const Navbar = ({ children }) => {
   const [firstTime, setFirstTime] = useState(true)
   const [firstTimeSearch, setFirstTimeSearch] = useState(true)
   const [searchPop, setSearchPop] = useState(false)
-
+  const auth = useAuth()
+  const navigate = useNavigate()
 
   function handlePop(e) {
     e.stopPropagation()
@@ -27,8 +30,13 @@ const Navbar = ({ children }) => {
     setFirstTimeSearch(false)
   }
 
+  function handleLogout() {
+    auth.logout()
+    navigate('/account')
+  }
+
   return (
-    <div className='w-[85%] mx-auto bg-white' onClick={() => setProfilePop(false)}>
+    <div className='xl:w-[85%] mx-auto bg-white' onClick={() => setProfilePop(false)}>
       {
         pathname.includes('account') || <nav className='w-[80%] mx-auto'>
           <div className='flex justify-between items-center h-28'>
@@ -63,7 +71,7 @@ const Navbar = ({ children }) => {
                 </div>
 
                 <div className='cursor-pointer' onClick={handlePop}>
-                  <img src="https://picsum.photos/200/300?grayscale" alt="" className='w-8 h-8 rounded-full' />
+                  <img src="https://picsum.photos/200/300?grayscale" alt="" className='w-9 h-9 rounded-full' />
                   <div className='trigger relative'>
                     {
                       <Popover profilePop={profilePop} firstTime={firstTime}>
@@ -76,7 +84,10 @@ const Navbar = ({ children }) => {
                           <Link to='/profile' className='block hover:bg-neutral-50 px-5 py-2'>Profile</Link>
                           <Link to='/settings' className='block hover:bg-neutral-50 px-5 py-2'>Settings</Link>
                         </div>
-                        <button className='px-5 py-2 hover:bg-neutral-50 w-full'>Logout</button>
+                        {
+                          auth.user && <button className='px-5 py-2 hover:bg-neutral-50 w-full flex items-center gap-2' onClick={handleLogout}><LogOut size={18} /> Logout</button>
+                        }
+
 
                       </Popover>
                     }

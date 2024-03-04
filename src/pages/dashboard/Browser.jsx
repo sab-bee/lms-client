@@ -10,7 +10,7 @@ const Browser = () => {
   return (
     <div className='w-[70%]'>
       <div className='flex gap-4 mt-10'>
-        <input type="text" placeholder='write title or the author' className='h-9 border px-4 rounded-md outline-none focus:bg-neutral-50 w-1/2 shadow shadow-[rgba(0,0,0,0.04)]' />
+        <input type="text" placeholder='write title or the author' className='h-9 border px-4 rounded-md outline-none focus:bg-neutral-50 w-1/2 shadow shadow-[rgba(0,0,0,0.04)] placeholder:-translate-y-[2px]' />
         <button className='block bg-black text-white h-9 px-6 rounded-md'>search</button>
       </div>
 

@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import Dashlink from '../../components/Dashlink'
 import { Outlet, useLocation } from 'react-router-dom'
 import Inbox from '../../components/Inbox';
-import { Trash2, Inbox as LInbox, Bolt, BookOpenText, Library as Shelf } from 'lucide-react';
+import { Trash2, Bolt, BookOpenText, Library as Shelf, Mail, MailOpen, Menu, MoreVertical } from 'lucide-react';
 import Tablink from '../../components/Tablink';
 const Dashbaord = () => {
   const [isInbox, setIsInbox] = useState(false)
   const [isReadMessage, setIsReadMessage] = useState(false)
   const [textToRead, setTextToRead] = useState(false)
+  const [openId, setOpenId] = useState(-1)
+  const [mobileNav, setMobileNav] = useState(false)
   const { pathname } = useLocation()
   const messages = [
     {
@@ -32,12 +34,23 @@ const Dashbaord = () => {
     setFirstTime(false)
   }
 
-  const handleReadMessage = (message) => {
-    setIsReadMessage(true)
+  const handleReadMessage = (message, id) => {
+    if (id === openId) {
+      setIsReadMessage(!isReadMessage)
+    } else {
+      setOpenId(id)
+      setIsReadMessage(true)
+    }
     setTextToRead(message)
   }
   return (
     <div className='flex min-h-screen'>
+      <button className='bg-black text-white fixed p-3 rounded-full bottom-4 right-4' onClick={handleInbox}>
+        {
+          isInbox ? <MailOpen /> : <Mail />
+        }
+        <span className={`-top-2 text-black bg-slate-200 right-0 font-medium w-5 h-5 rounded-full grid items-center justify-center text-sm transition-color absolute`}>1</span>
+      </button>
       <Inbox showInbox={isInbox} firstTime={firstTime}>
         <div className={`cs-shadow ${isReadMessage || 'hidden'} absolute w-full top-0 -left-full h-[320px] border rounded-md py-4 pt-0 bg-white overflow-y-auto overscroll-contain`}>
           <div className='border-b py-2 px-4'>
@@ -56,7 +69,7 @@ const Dashbaord = () => {
             messages.length === 0 ? <h2 className='text-center text-lg text-neutral-300'>no message found</h2> : messages.map((message, i) => {
               return (
                 <div key={i} className={`${message.unread && 'bg-neutral-50'} border p-3 rounded-md cursor-pointer hover:bg-neutral-50 transition-colors`
-                } onClick={() => handleReadMessage(message)}>
+                } onClick={() => handleReadMessage(message, i)}>
                   <h2 className={`${message.unread && 'font-medium'}`}>{message.from}</h2>
                   <h3 className={`${message.unread && 'font-medium'} text-sm`}>{message.sub}</h3>
                   <p className='text-neutral-500 text-sm'>{message.text.slice(0, 60) + '...'}</p>
@@ -68,7 +81,8 @@ const Dashbaord = () => {
         </div>
       </Inbox >
 
-      <div className='w-[20%]'>
+      {/* sidebar */}
+      <div className='w-[20%] bg-white z-10'>
         <div className='menu w-[90%] mx-auto select-none'>
           <div>
             <h2 className='ml-4 mb-5 account-type font-medium text-lg'>Premium Account</h2>
@@ -81,10 +95,6 @@ const Dashbaord = () => {
               <span>4</span>
             </div>
 
-            <div className={` flex mb-1 justify-between items-center cursor-pointer py-[6px] px-4 rounded-md transition-color hover:bg-neutral-50`} onClick={handleInbox}>
-              <p className={`flex items-center gap-2`}> <LInbox size={18} />Inbox</p>
-              <span className={`font-medium w-5 h-5 rounded-full bg-black text-white grid items-center justify-center text-sm transition-color`}>1</span>
-            </div>
           </div>
           <div className='mt-20'>
             <h2 className='ml-4 account-type font-medium text-lg mb-5'>Dashboard</h2>
@@ -94,6 +104,7 @@ const Dashbaord = () => {
           </div>
         </div>
       </div >
+
       <div className='divider h- w-[1px] bg-neutral-200'></div>
       <div className='w-[80%]' onClick={() => setIsInbox(false)}>
         <div className='content w-[90%] mx-auto mb-8'>
