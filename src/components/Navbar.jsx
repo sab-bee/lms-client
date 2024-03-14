@@ -11,7 +11,7 @@ const Navbar = ({ children }) => {
   const [firstTime, setFirstTime] = useState(true)
   const [firstTimeSearch, setFirstTimeSearch] = useState(true)
   const [searchPop, setSearchPop] = useState(false)
-  const auth = useAuth()
+  const { user, logout } = useAuth()
   const navigate = useNavigate()
 
   function handlePop(e) {
@@ -31,7 +31,7 @@ const Navbar = ({ children }) => {
   }
 
   function handleLogout() {
-    auth.logout()
+    logout()
     navigate('/account')
   }
 
@@ -77,15 +77,15 @@ const Navbar = ({ children }) => {
                       <Popover profilePop={profilePop} firstTime={firstTime}>
 
                         <div className='border-b px-5 py-2 hover:bg-neutral-50'>
-                          <h2>Admin</h2>
-                          <p>admin@mail.com</p>
+                          <h2>{user.user_name}</h2>
+                          <p>{user.email}</p>
                         </div>
                         <div className='border-b'>
                           <Link to='/profile' className='block hover:bg-neutral-50 px-5 py-2'>Profile</Link>
                           <Link to='/settings' className='block hover:bg-neutral-50 px-5 py-2'>Settings</Link>
                         </div>
                         {
-                          auth.user && <button className='px-5 py-2 hover:bg-neutral-50 w-full flex items-center gap-2' onClick={handleLogout}><LogOut size={18} /> Logout</button>
+                          user && <button className='px-5 py-2 hover:bg-neutral-50 w-full flex items-center gap-2' onClick={handleLogout}><LogOut size={18} /> Logout</button>
                         }
 
 

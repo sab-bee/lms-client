@@ -14,11 +14,14 @@ import Access from './pages/dashboard/Access';
 import Browser from './pages/dashboard/Browser';
 import { AuthProvider } from './utils/auth';
 import RequireAuth from './auth/RequireAuth'
+import { Toaster } from 'react-hot-toast';
+import Reset from './pages/account/Reset';
 
 function App() {
 
   return (
     <AuthProvider>
+      <Toaster />
       <Navbar>
         <Routes>
           <Route path='/' element={<RequireAuth><Dashbaord /></RequireAuth>} >
@@ -33,6 +36,7 @@ function App() {
           <Route path="/account" element={<Account />}>
             <Route index element={<Login />}></Route>
             <Route path="create" element={<Create />}></Route>
+            <Route path='reset' element={<Reset />}></Route>
           </Route>
         </Routes>
       </Navbar>
