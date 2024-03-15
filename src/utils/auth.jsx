@@ -8,6 +8,7 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
+  const [email, setEmail] = useState(null) // to store email to be verified
   const navigate = useNavigate()
 
 
@@ -67,13 +68,44 @@ export const AuthProvider = ({ children }) => {
     clearCookie('access_token')
   };
 
-  const reset = async () => {
+  const verifyEmail = async (email) => {
+    try {
+      const res = await axios.post('http://localhost:3001/api/auth/verifyEmail', email)
+      setEmail(email)
+      navigate('/account/otp')
+    } catch (error) {
+      toast(error?.response?.data?.message, {
+        id: 'err4'
+      })
+    }
+  }
+
+  const otp = async (otp) => {
+    try {
+      const res = await axios.post('http://localhost:3001/api/auth/otpCheck', { ...email, otp })
+      navigate('/account/SetNewPassword')
+    } catch (error) {
+      toast(error?.response?.data?.message, {
+        id: 'err5'
+      })
+    }
+  }
+
+  const setPass = async (password) => {
+    try {
+      const res = await axios.post('http://localhost:3001/api/auth/setPass', { ...email, password })
+      navigate('/account')
+    } catch (error) {
+      toast(error?.response?.data?.message, {
+        id: 'err6'
+      })
+    }
 
   }
 
   return (
     <AuthContext.Provider
-      value={{ user, create, login, logout, reset }}
+      value={{ user, create, login, logout, verifyEmail, otp, setPass }}
     >{children}</AuthContext.Provider>
   );
 };

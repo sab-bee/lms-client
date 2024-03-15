@@ -15,7 +15,10 @@ import Browser from './pages/dashboard/Browser';
 import { AuthProvider } from './utils/auth';
 import RequireAuth from './auth/RequireAuth'
 import { Toaster } from 'react-hot-toast';
-import Reset from './pages/account/Reset';
+import Verify from './pages/account/Verify';
+import Otp from './pages/account/Otp';
+import SetNewPassword from './pages/account/SetNewPassword';
+
 
 function App() {
 
@@ -36,7 +39,9 @@ function App() {
           <Route path="/account" element={<Account />}>
             <Route index element={<Login />}></Route>
             <Route path="create" element={<Create />}></Route>
-            <Route path='reset' element={<Reset />}></Route>
+            <Route path='reset' element={<Verify />}></Route>
+            <Route path='otp' element={<Otp />}></Route>
+            <Route path='setnewpass' element={<SetNewPassword />}></Route>
           </Route>
         </Routes>
       </Navbar>
