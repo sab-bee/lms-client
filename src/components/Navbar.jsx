@@ -77,8 +77,8 @@ const Navbar = ({ children }) => {
                       <Popover profilePop={profilePop} firstTime={firstTime}>
 
                         <div className='border-b px-5 py-2 hover:bg-neutral-50'>
-                          <h2>{user.user_name}</h2>
-                          <p>{user.email}</p>
+                          <h2>{user?.user_name}</h2>
+                          <p>{user?.email}</p>
                         </div>
                         <div className='border-b'>
                           <Link to='/profile' className='block hover:bg-neutral-50 px-5 py-2'>Profile</Link>

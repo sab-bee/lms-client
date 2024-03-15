@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }) => {
   const verifyEmail = async (email) => {
     try {
       const res = await axios.post('http://localhost:3001/api/auth/verifyEmail', email)
-      setEmail(email)
+      localStorage.setItem("email", JSON.stringify(email))
       navigate('/account/otp')
     } catch (error) {
       toast(error?.response?.data?.message, {
@@ -81,17 +81,20 @@ export const AuthProvider = ({ children }) => {
   }
 
   const otp = async (otp) => {
+    const email = JSON.parse(localStorage.getItem('email'))
     try {
       const res = await axios.post('http://localhost:3001/api/auth/otpCheck', { ...email, otp })
-      navigate('/account/SetNewPassword')
+      navigate('/account/setnewpass')
     } catch (error) {
+      console.log(error)
       toast(error?.response?.data?.message, {
         id: 'err5'
       })
     }
   }
 
-  const setPass = async (password) => {
+  const setPass = async ({ password }) => {
+    const email = JSON.parse(localStorage.getItem('email'))
     try {
       const res = await axios.post('http://localhost:3001/api/auth/setPass', { ...email, password })
       navigate('/account')

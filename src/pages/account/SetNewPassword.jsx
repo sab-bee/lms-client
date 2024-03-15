@@ -22,9 +22,13 @@ const SetNewPassword = () => {
         {/* password */}
         <div className={`${errors.password ? 'mb-10' : 'mb-5'} relative transition-all`}>
           <input type="password" placeholder="••••••••••••" className={`${errors.password ? 'border-red-300' : (watch().password && 'border-green-500')} block h-9 border px-4 rounded-md w-full outline-none focus:bg-neutral-50`} {...register("password", {
-            required: 'please enter your password'
+            required: 'please create an unique password', pattern: {
+              value: /^.{8,}$/i,
+              message: 'atleast 8 characters long'
+            }
           })} />
           <p className={`text-red-500 absolute`}>{errors.password?.message}</p>
+
         </div>
 
 
