@@ -4,8 +4,8 @@ import { Navigate } from 'react-router-dom'
 
 const RequireAuth = ({ children }) => {
   const auth = useAuth()
-  if (!auth.user) {
-    return <Navigate to='/account'></Navigate>
+  if (!auth?.user) {
+    return <Navigate to='/account' />
   }
   return children
 }

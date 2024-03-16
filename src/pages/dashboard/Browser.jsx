@@ -1,18 +1,37 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useState } from 'react'
+import { useForm } from 'react-hook-form';
+import { useAuth } from '../../utils/auth';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const Browser = () => {
-  const books = [
-    { title: 'Learn python in 7 days', author: 'Joshua', publish: '08/02/1999', edition: '18', borrowed: 20, category: 'coding', desc: "In this book, Douglas Crockford distills the best parts of JavaScript, focusing on its most elegant and effective features. It's a concise guide to writing high-quality JavaScript code, suitable for both beginners and experienced developers looking to deepen their understanding of the language. These books cover a range of program", stock: 8, image: 'https://placehold.co/400' },
-    { title: 'Learn python in 7 days', author: 'Joshua', publish: '08/02/1999', edition: '18', borrowed: 20, category: 'coding', desc: "In this book, Douglas Crockford distills the best parts of JavaScript, focusing on its most elegant and effective features. It's a concise guide to writing high-quality JavaScript code, suitable for both beginners and experienced developers looking to deepen their understanding of the language. These books cover a range of program", stock: 8, image: 'https://placehold.co/400' },
-    { title: 'Learn python in 7 days', author: 'Joshua', publish: '08/02/1999', edition: '18', borrowed: 20, category: 'coding', desc: "In this book, Douglas Crockford distills the best parts of JavaScript, focusing on its most elegant and effective features. It's a concise guide to writing high-quality JavaScript code, suitable for both beginners and experienced developers looking to deepen their understanding of the language. These books cover a range of program", stock: 8, image: 'https://placehold.co/400' }, { title: 'Learn python in 7 days', author: 'Joshua', publish: '08/02/1999', edition: '18', borrowed: 20, category: 'coding', desc: "In this book, Douglas Crockford distills the best parts of JavaScript, focusing on its most elegant and effective features. It's a concise guide to writing high-quality JavaScript code, suitable for both beginners and experienced developers looking to deepen their understanding of the language. These books cover a range of program", stock: 8, image: 'https://placehold.co/400' }
-  ]
+  const { register, handleSubmit, watch, formState: { errors } } = useForm({ mode: 'onChange' });
+  const [books, setBooks] = useState([])
+  const { user } = useAuth()
+
+  const onSubmit = data => {
+    axios.post('http://localhost:3001/api/book/search/', data, {
+      headers: {
+        authorization: `bearer ${user.access_token}`
+      }
+    }).then(res => {
+      setBooks(res.data)
+    }).catch(err => toast(err.response?.data?.message))
+  };
 
   return (
     <div className='w-[70%]'>
-      <div className='flex gap-4 mt-10'>
-        <input type="text" placeholder='write title or the author' className='h-9 border px-4 rounded-md outline-none focus:bg-neutral-50 w-1/2 shadow shadow-[rgba(0,0,0,0.04)] placeholder:-translate-y-[2px]' />
-        <button className='block bg-black text-white h-9 px-6 rounded-md'>search</button>
-      </div>
+      <form onSubmit={handleSubmit(onSubmit)} className='flex gap-4 mt-10'>
+        <div className='relative'>
+          <input type="text" placeholder='write title or the author' className='h-9 border px-4 rounded-md outline-none focus:bg-neutral-50 shadow shadow-[rgba(0,0,0,0.04)] placeholder:-translate-y-[2px] w-full' {...register('query', {
+            required: 'please type something'
+          }
+          )} />
+          <p className='absolute text-red-400'>{errors.query?.message}</p>
+        </div>
+        <button type="submit" className='block bg-black text-white h-9 px-6 rounded-md' >search</button>
+      </form>
 
       <div className='grid grid-cols-4 mt-10 gap-8'>
         {
@@ -24,11 +43,13 @@ const Browser = () => {
 }
 
 const SingleBook = ({ book }) => {
-  const { title, author, image } = book
+  const { title, author, image, book_id } = book
+  const navigate = useNavigate()
   return (<div>
     <img src={image} alt="" className='rounded-md' />
     <h2 className='font-medium mt-2'>{title}</h2>
     <p className='text-neutral-500'>{author}</p>
+    <button onClick={() => navigate(`/borrow/${book_id}`)}>borrow</button>
   </div>)
 }
 export default Browser

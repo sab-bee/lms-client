@@ -19,12 +19,14 @@ import Verify from './pages/account/Verify';
 import Otp from './pages/account/Otp';
 import SetNewPassword from './pages/account/SetNewPassword';
 import Switcher from './components/switcher';
+import Borrow from './pages/Borrow/Borrow';
+import Book from './pages/Borrow/Book';
 
 
 function App() {
 
   return (
-    <>
+    <div className='dark:bg-black'>
       <Switcher />
 
       <AuthProvider>
@@ -47,10 +49,13 @@ function App() {
               <Route path='otp' element={<Otp />}></Route>
               <Route path='setnewpass' element={<SetNewPassword />}></Route>
             </Route>
+            <Route path='/borrow/:_id' element={<RequireAuth><Borrow /></RequireAuth>}>
+              <Route index element={<Book />}></Route>
+            </Route>
           </Routes>
         </Navbar>
       </AuthProvider >
-    </>
+    </div>
   )
 }
 

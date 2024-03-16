@@ -2,7 +2,6 @@ import axios from "axios";
 import { createContext, useContext, useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { clearCookie, cookie } from "./cookie";
 
 const AuthContext = createContext(null);
 
@@ -54,7 +53,6 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await axios.post('http://localhost:3001/api/auth/login', input)
       setUser(res.data)
-      cookie('access_token', res.data.access_token, 365)
       navigate('/')
     } catch (error) {
       toast(error?.response?.data?.message, {
@@ -65,7 +63,8 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     const res = await axios.post('http://localhost:3001/api/auth/logout')
-    clearCookie('access_token')
+    localStorage.removeItem('user')
+    navigate('/account')
   };
 
   const verifyEmail = async (email) => {

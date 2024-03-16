@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Popover from './Popover'
 import Search from './search'
 import { useAuth } from '../utils/auth'
-import { LogOut } from 'lucide-react'
+import { BookOpen, LogOut } from 'lucide-react'
 
 const Navbar = ({ children }) => {
   const { pathname } = useLocation()
@@ -12,7 +12,6 @@ const Navbar = ({ children }) => {
   const [firstTimeSearch, setFirstTimeSearch] = useState(true)
   const [searchPop, setSearchPop] = useState(false)
   const { user, logout } = useAuth()
-  const navigate = useNavigate()
 
   function handlePop(e) {
     e.stopPropagation()
@@ -32,7 +31,6 @@ const Navbar = ({ children }) => {
 
   function handleLogout() {
     logout()
-    navigate('/account')
   }
 
   return (
@@ -40,7 +38,7 @@ const Navbar = ({ children }) => {
       {
         pathname.includes('account') || <nav className='w-[80%] mx-auto'>
           <div className='flex justify-between items-center h-28'>
-            <div>icon</div>
+            <div className='border rounded-full border-neutral-600 w-9 h-9 grid justify-center items-center'><BookOpen /></div>
             <div>
               <div className='flex gap-x-4 items-center'>
                 <div className='relative'>
