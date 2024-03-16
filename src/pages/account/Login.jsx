@@ -12,10 +12,10 @@ const Login = () => {
 
 	return (
 		<div>
-			<h2 className="text-center font-medium text-2xl">
+			<h2 className="text-center font-medium text-2xl dark:text-white">
 				Login to your account
 			</h2>
-			<p className="text-center my-2">
+			<p className="text-center my-2 dark:text-slate-400">
 				Use your credential to login to your account
 			</p>
 
@@ -23,7 +23,7 @@ const Login = () => {
 
 				{/* id */}
 				<div className={`${errors.user_id ? 'mb-10' : 'mb-5'} relative transition-all`}>
-					<input type="text" placeholder="student id" className={`${errors.user_id ? 'border-red-300' : (watch().id && 'border-green-500')} block h-9 border px-4 rounded-md w-full outline-none focus:bg-neutral-50`} {...register("user_id", {
+					<input type="text" placeholder="student id" className={`${errors.user_id ? 'border-red-300 dark:border-red-500' : (watch().id && 'dark:border-green-500 border-green-500')} block h-9 border px-4 rounded-md w-full outline-none focus:bg-neutral-50 dark:bg-neutral-600 dark:text-white dark:border-none`} {...register("user_id", {
 						required: 'please enter student id', pattern: {
 							value: /^\d{8}$/i,
 							message: 'should be number and 8 digit long'
@@ -34,8 +34,8 @@ const Login = () => {
 
 
 				{/* password */}
-				<div className={`${errors.password ? 'mb-10' : 'mb-5'} relative transition-all`}>
-					<input type="password" placeholder="••••••••••••" className={`${errors.password ? 'border-red-300' : (watch().password && 'border-green-500')} block h-9 border px-4 rounded-md w-full outline-none focus:bg-neutral-50`} {...register("password", {
+				<div className={`${errors.password ? 'mb-10' : 'mb-5'} relative transition-all `}>
+					<input type="password" placeholder="••••••••••••" className={`${errors.password ? 'border-red-300' : (watch().password && 'dark:border-green-500 border-green-500')} block h-9 border px-4 rounded-md w-full outline-none focus:bg-neutral-50 dark:bg-neutral-600 dark:text-white dark:border-none`} {...register("password", {
 						required: 'please enter your password'
 					})} />
 					<p className={`text-red-500 absolute`}>{errors.password?.message}</p>
@@ -43,7 +43,7 @@ const Login = () => {
 				</div>
 
 
-				<button type="submit" value={"Login"} className="w-full h-9 text-white rounded-md bg-black ">
+				<button type="submit" value={"Login"} className="w-full h-9 text-white rounded-md bg-black dark:bg-zinc-600">
 					Login
 				</button>
 			</form>

@@ -83,7 +83,7 @@ const Dashbaord = () => {
       </Inbox >
 
       {/* sidebar */}
-      <div className='w-[20%] bg-white z-10'>
+      <div className='w-[20%] bg-white z-10 dark:bg-black dark:text-white'>
         <div className='menu w-[90%] mx-auto select-none'>
           <div>
             <h2 className='ml-4 mb-5 account-type font-medium text-lg'>Premium Account</h2>

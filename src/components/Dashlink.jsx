@@ -5,7 +5,7 @@ const Dashlink = ({ children, to, className }) => {
   return (
     <Link
       to={to}
-      className={`${pathname === to && "bg-neutral-100"
+      className={`${pathname === to && "bg-neutral-100 dark:bg-zinc-700 dark:text-white"
         } ${className}  transition-all ease-linear px-4 rounded-lg py-[6px] block`}
     >
       {children}

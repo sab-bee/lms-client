@@ -8,7 +8,7 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
-  const [email, setEmail] = useState(null) // to store email to be verified
+  const [timer, setTimer] = useState(0)
   const navigate = useNavigate()
 
 
@@ -108,7 +108,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, create, login, logout, verifyEmail, otp, setPass }}
+      value={{ user, create, login, logout, verifyEmail, otp, setPass, timer, setTimer }}
     >{children}</AuthContext.Provider>
   );
 };

@@ -5,13 +5,12 @@ import { useEffect } from 'react';
 
 const Otp = () => {
   const [otp, setOTP] = useState(['', '', '', '', '', '']);
-  const { otp: authOtp, verifyEmail } = useAuth()
+  const { otp: authOtp, verifyEmail, timer, setTimer } = useAuth()
 
-  const [count, setCount] = useState(60);
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setCount(prevSeconds => {
-        if (count === 0) {
+      setTimer(prevSeconds => {
+        if (timer === 0) {
           clearInterval(intervalId);
           return 0
         } else {
@@ -20,16 +19,17 @@ const Otp = () => {
       })
     }, 1000);
     return () => clearInterval(intervalId);
-  }, [count])
+  }, [timer])
 
   const handleOtp = (otp) => {
+    setTimer(60)
     authOtp(otp.join(''))
   }
 
   const handleResend = () => {
     const email = JSON.parse(localStorage.getItem('email'))
     verifyEmail({ ...email })
-    setCount(60)
+    setTimer(60)
   }
 
   return (
@@ -37,25 +37,25 @@ const Otp = () => {
       <h2 className="text-center font-medium text-2xl">
         OTP
       </h2>
-      <p className="text-center my-2">
+      <p className="text-center my-2 dark:text-slate-400">
         A 6 digit code has been sent to your email
       </p>
       <OtpForm otp={otp} setOTP={setOTP}></OtpForm>
 
       {
-        count === 0 ?
-          <button type="submit" value={"Login"} className="w-full h-9 bg-black text-white rounded-md mt-5" onClick={handleResend}>
+        timer === 0 ?
+          <button type="submit" value={"Login"} className="w-full h-9 bg-black text-white rounded-md mt-5 dark:bg-zinc-600" onClick={handleResend}>
             Resend
           </button> :
-          <button type="submit" value={"Login"} className="w-full h-9 bg-black text-white rounded-md mt-5" onClick={() => handleOtp(otp)}>
+          <button type="submit" value={"Login"} className="w-full h-9 bg-black text-white rounded-md mt-5 dark:bg-zinc-600" onClick={() => handleOtp(otp)}>
             Verify
           </button>
       }
 
 
-      <p className='text-center mt-2 text-neutral-500'>
+      <p className='text-center mt-2 text-neutral-500 dark:text-slate-400'>
         {
-          count === 0 ? `otp has expired` : <span>otp expires in <span className='text-xl'>{count}</span> seconds</span>
+          timer === 0 ? `otp has expired` : <span>otp expires in <span className='text-xl'>{timer}</span> seconds</span>
         }
       </p>
     </div>

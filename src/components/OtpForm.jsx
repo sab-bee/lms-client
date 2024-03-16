@@ -63,7 +63,7 @@ function OtpForm({ otp, setOTP }) {
           onChange={(e) => handleChange(index, e)}
           onKeyDown={(e) => handleKeyPress(index, e)}
           onPaste={handlePaste}
-          className="border border-neutral-200 w-12 h-12 text-2xl grid rounded-md outline-none focus:border-blue-200 focus:border-2 text-center"
+          className="border border-neutral-200 w-12 h-12 text-2xl grid rounded-md outline-none focus:border-blue-200 focus:border-2 text-center dark:bg-neutral-600 dark:border-none"
           autoComplete="off"
           disabled
         />
