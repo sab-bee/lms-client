@@ -41,6 +41,9 @@ function App() {
               <Route path='/due' element={<Due></Due>}></Route>
               <Route path='/addnew' element={<AddNew></AddNew>}></Route>
               <Route path='/browser' element={<Browser></Browser>}></Route>
+              <Route path='/borrow/:_id' element={<RequireAuth><Borrow /></RequireAuth>}>
+                <Route index element={<Book />}></Route>
+              </Route>
             </Route>
             <Route path="/account" element={<Account />}>
               <Route index element={<Login />}></Route>
@@ -49,9 +52,7 @@ function App() {
               <Route path='otp' element={<Otp />}></Route>
               <Route path='setnewpass' element={<SetNewPassword />}></Route>
             </Route>
-            <Route path='/borrow/:_id' element={<RequireAuth><Borrow /></RequireAuth>}>
-              <Route index element={<Book />}></Route>
-            </Route>
+
           </Routes>
         </Navbar>
       </AuthProvider >

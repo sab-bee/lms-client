@@ -1,23 +1,35 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect } from 'react'
+import { useState } from 'react'
+import { useAuth } from '../../utils/auth'
+import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
 const Library = () => {
-  const latest = [
-    { title: 'Learn python in 7 days', author: 'Joshua', publish: '08/02/1999', edition: '18', borrowed: 20, category: 'coding', desc: "In this book, Douglas Crockford distills the best parts of JavaScript, focusing on its most elegant and effective features. It's a concise guide to writing high-quality JavaScript code, suitable for both beginners and experienced developers looking to deepen their understanding of the language. These books cover a range of program", stock: 8, image: 'https://placehold.co/400' },
-    { title: 'Learn python in 7 days', author: 'Joshua', publish: '08/02/1999', edition: '18', borrowed: 20, category: 'coding', desc: "In this book, Douglas Crockford distills the best parts of JavaScript, focusing on its most elegant and effective features. It's a concise guide to writing high-quality JavaScript code, suitable for both beginners and experienced developers looking to deepen their understanding of the language. These books cover a range of program", stock: 8, image: 'https://placehold.co/400' },
-    { title: 'Learn python in 7 days', author: 'Joshua', publish: '08/02/1999', edition: '18', borrowed: 20, category: 'coding', desc: "In this book, Douglas Crockford distills the best parts of JavaScript, focusing on its most elegant and effective features. It's a concise guide to writing high-quality JavaScript code, suitable for both beginners and experienced developers looking to deepen their understanding of the language. These books cover a range of program", stock: 8, image: 'https://placehold.co/400' }, { title: 'Learn python in 7 days', author: 'Joshua', publish: '08/02/1999', edition: '18', borrowed: 20, category: 'coding', desc: "In this book, Douglas Crockford distills the best parts of JavaScript, focusing on its most elegant and effective features. It's a concise guide to writing high-quality JavaScript code, suitable for both beginners and experienced developers looking to deepen their understanding of the language. These books cover a range of program", stock: 8, image: 'https://placehold.co/400' }
-  ]
 
-  const toppic = [
-    { title: 'Learn python in 7 days', author: 'Joshua', publish: '08/02/1999', edition: '18', borrowed: 20, category: 'coding', desc: "In this book, Douglas Crockford distills the best parts of JavaScript, focusing on its most elegant and effective features. It's a concise guide to writing high-quality JavaScript code, suitable for both beginners and experienced developers looking to deepen their understanding of the language. These books cover a range of program", stock: 8, image: 'https://placehold.co/400' },
-    { title: 'Learn python in 7 days', author: 'Joshua', publish: '08/02/1999', edition: '18', borrowed: 20, category: 'coding', desc: "In this book, Douglas Crockford distills the best parts of JavaScript, focusing on its most elegant and effective features. It's a concise guide to writing high-quality JavaScript code, suitable for both beginners and experienced developers looking to deepen their understanding of the language. These books cover a range of program", stock: 8, image: 'https://placehold.co/400' },
-    { title: 'Learn python in 7 days', author: 'Joshua', publish: '08/02/1999', edition: '18', borrowed: 20, category: 'coding', desc: "In this book, Douglas Crockford distills the best parts of JavaScript, focusing on its most elegant and effective features. It's a concise guide to writing high-quality JavaScript code, suitable for both beginners and experienced developers looking to deepen their understanding of the language. These books cover a range of program", stock: 8, image: 'https://placehold.co/400' }
-  ]
+  const [latestBooks, setLatestBooks] = useState([])
+  const [topBooks, setToptBooks] = useState([])
+  // const [latestBooks, setLatestBooks] = useState([])
+  const { user } = useAuth()
 
-  const recommend = [
-    { title: 'Learn python in 7 days', author: 'Joshua', publish: '08/02/1999', edition: '18', borrowed: 20, category: 'coding', desc: "In this book, Douglas Crockford distills the best parts of JavaScript, focusing on its most elegant and effective features. It's a concise guide to writing high-quality JavaScript code, suitable for both beginners and experienced developers looking to deepen their understanding of the language. These books cover a range of program", stock: 8, image: 'https://placehold.co/400' },
-    { title: 'Learn python in 7 days', author: 'Joshua', publish: '08/02/1999', edition: '18', borrowed: 20, category: 'coding', desc: "In this book, Douglas Crockford distills the best parts of JavaScript, focusing on its most elegant and effective features. It's a concise guide to writing high-quality JavaScript code, suitable for both beginners and experienced developers looking to deepen their understanding of the language. These books cover a range of program", stock: 8, image: 'https://placehold.co/400' },
-    { title: 'Learn python in 7 days', author: 'Joshua', publish: '08/02/1999', edition: '18', borrowed: 20, category: 'coding', desc: "In this book, Douglas Crockford distills the best parts of JavaScript, focusing on its most elegant and effective features. It's a concise guide to writing high-quality JavaScript code, suitable for both beginners and experienced developers looking to deepen their understanding of the language. These books cover a range of program", stock: 8, image: 'https://placehold.co/400' }
-  ]
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/api/book/list?type=latest&limit=6', {
+      headers: {
+        authorization: `bearer ${user.access_token}`
+      }
+    }).then(res => {
+      setLatestBooks(res.data)
+      axios.get('http://localhost:3001/api/book/list?type=top&limit=6', {
+        headers: {
+          authorization: `bearer ${user.access_token}`
+        }
+      }).then(res => {
+        setToptBooks(res.data)
+      })
+
+    }).catch(err => toast(err.response?.data?.sqlMessage))
+  }, [])
 
   return (
     <div className='w-[70%]'>
@@ -25,9 +37,9 @@ const Library = () => {
         <h2 className='font-medium text-2xl'>Latest Arrival</h2>
         <p className=' text-neutral-500 mb-4 border-b pb-2'>List of new books this month</p>
 
-        <div className='gap-4  overflow-x-auto flex pb-2'>
+        <div className='gap-8 overflow-x-auto flex pb-2'>
           {
-            latest.map((book, i) => <SingleBook book={book} latest={true} key={i}></SingleBook>)
+            latestBooks.map((book, i) => <SingleBook book={book} latest={true} key={i}></SingleBook>)
           }
         </div>
       </div>
@@ -37,14 +49,14 @@ const Library = () => {
       <div className='mt-8'>
         <h2 className='font-medium text-2xl'>Top Picks</h2>
         <p className=' text-neutral-500 mb-4 border-b pb-2'>Top books borroed by students</p>
-        <div className='flex gap-4'>
+        <div className='flex gap-12'>
           {
-            toppic.map((book, i) => <SingleBook book={book} key={i}></SingleBook>)
+            topBooks.map((book, i) => <SingleBook book={book} key={i}></SingleBook>)
           }
         </div>
       </div>
 
-      <div className='mt-8'>
+      {/* <div className='mt-8'>
         <h2 className='font-medium text-2xl'>For You</h2>
         <p className=' text-neutral-500 mb-4 border-b pb-2'>Recommended for you based on your record</p>
         <div className='flex gap-4'>
@@ -52,7 +64,7 @@ const Library = () => {
             recommend.map((book, i) => <SingleBook book={book} key={i}></SingleBook>)
           }
         </div>
-      </div>
+      </div> */}
 
 
     </div>
@@ -60,9 +72,10 @@ const Library = () => {
 }
 
 const SingleBook = ({ book, latest }) => {
-  const { title, author, publish, edition, borrowed, category, desc, stock, image } = book
+  const { book_id, title, author, publish, edition, borrowed, category, desc, stock, image } = book
+  const navigate = useNavigate()
   return (
-    <div className={`${latest ? 'w-[300px] flex-shrink-0' : 'w-[150px] min-h-[150px]'} `}>
+    <div className={`${latest ? 'w-[260px] flex-shrink-0' : 'w-[150px] min-h-[150px]'} hover:scale-105 cursor-pointer transition-all duration-300`} onClick={() => navigate(`/borrow/${book_id}`)}>
       <img src={image} alt="" className={`rounded-md object-cover`} />
       <h2 className='font-medium mt-2'>{title}</h2>
       <h3>{author}</h3>

@@ -8,8 +8,7 @@ const Borrow = () => {
   const { _id } = useParams()
   const [book, setBook] = useState(null)
   const { user } = useAuth()
-
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     axios.post('http://localhost:3001/api/book/getbookbyid/', { book_id: _id }, {
@@ -17,12 +16,19 @@ const Borrow = () => {
         authorization: `bearer ${user.access_token}`
       }
     }).then(res => {
+      setIsLoading(false)
       setBook(res.data)
     }).catch(err => toast(err.response?.data?.message))
   }, [])
 
+  if (isLoading) {
+    console.log('loading')
+    return
+  };
+
   return (
     <div><Book book={book} /></div>
+
   )
 }
 

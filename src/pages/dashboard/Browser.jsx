@@ -45,11 +45,10 @@ const Browser = () => {
 const SingleBook = ({ book }) => {
   const { title, author, image, book_id } = book
   const navigate = useNavigate()
-  return (<div>
+  return (<div onClick={() => navigate(`/borrow/${book_id}`)} className='hover:scale-105 cursor-pointer transition-all duration-300'>
     <img src={image} alt="" className='rounded-md' />
     <h2 className='font-medium mt-2'>{title}</h2>
     <p className='text-neutral-500'>{author}</p>
-    <button onClick={() => navigate(`/borrow/${book_id}`)}>borrow</button>
   </div>)
 }
 export default Browser
