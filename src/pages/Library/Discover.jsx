@@ -5,7 +5,7 @@ import { useAuth } from '../../utils/auth'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 
-const Library = () => {
+const Discover = () => {
 
   const [latestBooks, setLatestBooks] = useState([])
   const [topBooks, setToptBooks] = useState([])
@@ -83,4 +83,4 @@ const SingleBook = ({ book, latest }) => {
   )
 }
 
-export default Library
+export default Discover

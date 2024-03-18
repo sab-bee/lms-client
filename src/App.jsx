@@ -2,7 +2,7 @@ import './App.css'
 import { Routes, Route } from 'react-router-dom';
 import Dashbaord from './pages/dashboard/Dashbaord';
 import BookShelf from './pages/dashboard/BookShelf';
-import Library from './pages/dashboard/Library';
+import Library from './pages/Library/Library';
 import Request from './pages/dashboard/Request';
 import AddNew from './pages/dashboard/AddNew';
 import Due from './pages/dashboard/Due';
@@ -11,7 +11,7 @@ import Login from './pages/account/Login';
 import Create from './pages/account/Create';
 import Navbar from './components/Navbar';
 import Access from './pages/dashboard/Access';
-import Browser from './pages/dashboard/Browser';
+import Browser from './pages/Library/Browser';
 import { AuthProvider } from './utils/auth';
 import RequireAuth from './auth/RequireAuth'
 import { Toaster } from 'react-hot-toast';
@@ -21,6 +21,7 @@ import SetNewPassword from './pages/account/SetNewPassword';
 import Switcher from './components/switcher';
 import Borrow from './pages/Borrow/Borrow';
 import Book from './pages/Borrow/Book';
+import Discover from './pages/Library/Discover';
 
 
 function App() {
@@ -40,8 +41,12 @@ function App() {
               <Route path='/request' element={<Request></Request>}></Route>
               <Route path='/due' element={<Due></Due>}></Route>
               <Route path='/addnew' element={<AddNew></AddNew>}></Route>
-              <Route path='/browser' element={<Browser></Browser>}></Route>
-              <Route path='/borrow/:_id' element={<RequireAuth><Borrow /></RequireAuth>}>
+              <Route path='/library' element={<Library />}>
+                <Route index element={<Discover />}></Route>
+                <Route path='browser' element={<Browser />}></Route>
+              </Route>
+
+              <Route path='/borrow/:_id' element={<Borrow />}>
                 <Route index element={<Book />}></Route>
               </Route>
             </Route>

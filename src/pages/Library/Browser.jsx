@@ -24,13 +24,13 @@ const Browser = () => {
     <div className='w-[70%]'>
       <form onSubmit={handleSubmit(onSubmit)} className='flex gap-4 mt-10'>
         <div className='relative'>
-          <input type="text" placeholder='write title or the author' className='h-9 border px-4 rounded-md outline-none focus:bg-neutral-50 shadow shadow-[rgba(0,0,0,0.04)] placeholder:-translate-y-[2px] w-full' {...register('query', {
+          <input type="text" placeholder='write title or the author' className='h-9 border px-4 rounded-md outline-none focus:bg-neutral-50 shadow shadow-[rgba(0,0,0,0.04)] placeholder:-translate-y-[2px] w-full dark:bg-neutral-700 dark:border-neutral-600' {...register('query', {
             required: 'please type something'
           }
           )} />
           <p className='absolute text-red-400'>{errors.query?.message}</p>
         </div>
-        <button type="submit" className='block bg-black text-white h-9 px-6 rounded-md' >search</button>
+        <button type="submit" className='transition-colors block bg-black dark:bg-purple-500 text-white h-9 px-6 rounded-md' >search</button>
       </form>
 
       <div className='grid grid-cols-4 mt-10 gap-8'>

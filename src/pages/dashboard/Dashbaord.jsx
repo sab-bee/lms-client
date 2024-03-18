@@ -46,30 +46,31 @@ const Dashbaord = () => {
   }
   return (
     <div className='flex min-h-screen'>
-      <button className='bg-black text-white fixed p-3 rounded-full bottom-4 right-4' onClick={handleInbox}>
+      <button className='bg-black text-white fixed p-3 rounded-full bottom-4 right-4 dark:bg-purple-500' onClick={handleInbox}>
         {
           isInbox ? <MailOpen /> : <Mail />
         }
         <span className={`-top-2 text-black bg-slate-200 right-0 font-medium w-5 h-5 rounded-full grid items-center justify-center text-sm transition-color absolute`}>1</span>
       </button>
       <Inbox showInbox={isInbox} firstTime={firstTime}>
-        <div className={`cs-shadow ${isReadMessage || 'hidden'} absolute w-full top-0 -left-full h-[320px] border rounded-md py-4 pt-0 bg-white overflow-y-auto overscroll-contain`}>
-          <div className='border-b py-2 px-4'>
+        {/* mail extended */}
+        <div className={`cs-shadow ${isReadMessage || 'hidden'} absolute w-full top-0 -left-full h-[320px] border rounded-md py-4 pt-0 bg-white dark:bg-neutral-700 dark:border-neutral-600 overflow-y-auto overscroll-contain`}>
+          <div className='border-b dark:border-neutral-600 py-2 px-4'>
             <button className='ml-auto block w-fit'>
               <Trash2 size={20} strokeWidth={1.5} />
             </button>
           </div>
           <h2 className='font-medium px-6'>{textToRead.from}</h2>
-          <h3 className='font-medium border-b pb-2 mb-2 px-6'>{textToRead.sub}</h3>
+          <h3 className='font-medium border-b dark:border-neutral-600 pb-2 mb-2 px-6'>{textToRead.sub}</h3>
           <p className='px-6'>{textToRead.text}</p>
-
         </div>
 
+        {/* mail box */}
         <div className='space-y-4 p-4 w-[350px] cs-shadow'>
           {
             messages.length === 0 ? <h2 className='text-center text-lg text-neutral-300'>no message found</h2> : messages.map((message, i) => {
               return (
-                <div key={i} className={`${message.unread && 'bg-neutral-50'} border p-3 rounded-md cursor-pointer hover:bg-neutral-50 transition-colors`
+                <div key={i} className={`${message.unread && 'bg-neutral-50 dark:bg-neutral-800'} border dark:border-neutral-600 p-3 rounded-md cursor-pointer hover:bg-neutral-50 hover:dark:bg-neutral-800 transition-colors`
                 } onClick={() => handleReadMessage(message, i)}>
                   <h2 className={`${message.unread && 'font-medium'}`}>{message.from}</h2>
                   <h3 className={`${message.unread && 'font-medium'} text-sm`}>{message.sub}</h3>
@@ -83,7 +84,7 @@ const Dashbaord = () => {
       </Inbox >
 
       {/* sidebar */}
-      <div className='w-[20%] bg-white z-10 dark:bg-black dark:text-white'>
+      <div className='w-[20%] bg-white z-10 dark:bg-neutral-800 dark:text-white'>
         <div className='menu w-[90%] mx-auto select-none'>
           <div>
             <h2 className='ml-4 mb-5 account-type font-medium text-lg'>Premium Account</h2>
@@ -101,7 +102,7 @@ const Dashbaord = () => {
             <h2 className='ml-4 account-type font-medium text-lg mb-5'>Dashboard</h2>
             <Dashlink to='/' className='flex gap-2 items-center mb-1'><Shelf size={18} />My Book Shelf</Dashlink>
             <Dashlink className='flex gap-2 items-center mb-1' to='/library'><BookOpenText size={18} />Library</Dashlink>
-            <Dashlink className='flex gap-2 items-center mb-1' to='/access'><Bolt size={18} />Access</Dashlink>
+            <Dashlink className='flex gap-2 items-center mb-1' to='/access' ><Bolt size={18} />Access</Dashlink>
           </div>
         </div>
       </div >
@@ -109,13 +110,7 @@ const Dashbaord = () => {
       <div className='divider h- w-[1px] bg-neutral-200'></div>
       <div className='w-[80%]' onClick={() => setIsInbox(false)}>
         <div className='content w-[90%] mx-auto mb-8'>
-          {
-            (pathname.includes('browser') || pathname.includes('library')) &&
-            <div className='bg-neutral-100 w-fit px-1 py-1 rounded-md mb-4 flex'>
-              <Tablink to='/library'>Discover</Tablink>
-              <Tablink to='/browser'>Browse</Tablink>
-            </div>
-          }
+
           <Outlet />
         </div>
       </div>
