@@ -100,8 +100,8 @@ const Dashbaord = () => {
           </div>
           <div className='mt-20'>
             <h2 className='ml-4 account-type font-medium text-lg mb-5'>Dashboard</h2>
-            <Dashlink to='/' className='flex gap-2 items-center mb-1'><Shelf size={18} />My Book Shelf</Dashlink>
-            <Dashlink className='flex gap-2 items-center mb-1' to='/library'><BookOpenText size={18} />Library</Dashlink>
+            <Dashlink className='flex gap-2 items-center mb-1' to='/'><BookOpenText size={18} />Library</Dashlink>
+            <Dashlink to='/bookshelf' className='flex gap-2 items-center mb-1'><Shelf size={18} />My Book Shelf</Dashlink>
             <Dashlink className='flex gap-2 items-center mb-1' to='/access' ><Bolt size={18} />Access</Dashlink>
           </div>
         </div>

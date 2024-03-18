@@ -25,8 +25,8 @@ const Login = () => {
 				<div className={`${errors.user_id ? 'mb-10' : 'mb-5'} relative transition-all`}>
 					<input type="text" placeholder="student id" className={`${errors.user_id ? 'border-red-300 dark:border-red-500' : (watch().id && 'dark:border-green-500 border-green-500')} block h-9 border px-4 rounded-md w-full outline-none focus:bg-neutral-50 dark:bg-neutral-600 dark:text-white dark:border-none`} {...register("user_id", {
 						required: 'please enter student id', pattern: {
-							value: /^\d{8}$/i,
-							message: 'should be number and 8 digit long'
+							value: /^.{8}$/i,
+							message: 'should be 8 character long'
 						}
 					})} />
 					<p className={`text-red-500 absolute`}>{errors.user_id?.message}</p>

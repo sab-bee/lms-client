@@ -30,7 +30,7 @@ const Browser = () => {
           )} />
           <p className='absolute text-red-400'>{errors.query?.message}</p>
         </div>
-        <button type="submit" className='transition-colors block bg-black dark:bg-purple-500 text-white h-9 px-6 rounded-md' >search</button>
+        <button type="submit" className='transition-colors block bg-black dark:bg-neutral-500 text-white h-9 px-6 rounded-md' >search</button>
       </form>
 
       <div className='grid grid-cols-4 mt-10 gap-8'>

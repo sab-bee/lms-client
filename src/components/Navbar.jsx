@@ -34,7 +34,7 @@ const Navbar = ({ children }) => {
   }
 
   return (
-    <div className='xl:w-[85%] mx-auto bg-white dark:bg-neutral-800 dark:text-white' onClick={() => setProfilePop(false)}>
+    <div className='xl:w-[85%] mx-auto bg-white dark:bg-neutral-800 dark:text-neutral-200' onClick={() => setProfilePop(false)}>
       {
         pathname.includes('account') || <nav className='w-[80%] mx-auto'>
           <div className='flex justify-between items-center h-28'>
