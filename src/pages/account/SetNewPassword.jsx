@@ -21,7 +21,7 @@ const SetNewPassword = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
         {/* password */}
         <div className={`${errors.password ? 'mb-10' : 'mb-5'} relative transition-all`}>
-          <input type="password" placeholder="••••••••••••" className={`${errors.password ? 'border-red-300' : (watch().password && 'border-green-500')} block h-9 border px-4 rounded-md w-full outline-none focus:bg-neutral-50`} {...register("password", {
+          <input type="password" placeholder="••••••••••••" className={`${errors.password ? 'border-red-300' : (watch().password && 'border-green-500')} block h-9 border px-4 rounded-md w-full outline-none focus:bg-neutral-50 dark:bg-neutral-700 dark:border-none`} {...register("password", {
             required: 'please create an unique password', pattern: {
               value: /^.{8,}$/i,
               message: 'atleast 8 characters long'
@@ -32,7 +32,7 @@ const SetNewPassword = () => {
         </div>
 
 
-        <button type="submit" value={"Login"} className="w-full h-9 text-white rounded-md bg-black ">
+        <button type="submit" value={"Login"} className="w-full h-9 text-white rounded-md bg-black dark:bg-neutral-600">
           set
         </button>
       </form>

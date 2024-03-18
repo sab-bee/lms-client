@@ -13,9 +13,9 @@ export default function Switcher() {
 
   return (
     <div className='absolute top-5 right-5'>
-      <label htmlFor="dark" className='cursor-pointer'>
+      <label htmlFor="dark" className='cursor-pointer bg-neutral-100 dark:bg-purple-500 w-9 h-9 rounded-full grid items-center justify-center'>
         {
-          darkSide ? <Sun color='white' /> : <Moon />
+          darkSide ? <Sun color='white' /> : <Moon color='#404040' />
         }
       </label>
       <input type='checkbox' id='dark' onChange={toggleDarkMode} checked={darkSide} className='hidden' />

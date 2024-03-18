@@ -23,7 +23,7 @@ const Create = () => {
         {/* name */}
 
         <div className={`${errors.name ? 'mb-10' : 'mb-5'} relative transition-all`}>
-          <input type="text" placeholder="student name" className={`${errors.name ? 'border-red-300' : (watch().name && 'border-green-500')} block h-9 border px-4 rounded-md w-full outline-none focus:bg-neutral-50 dark:bg-neutral-600 dark:border-none`}
+          <input type="text" placeholder="student name" className={`${errors.name ? 'border-red-300' : (watch().name && 'border-green-500')} block h-9 border px-4 rounded-md w-full outline-none focus:bg-neutral-50 dark:bg-neutral-700 dark:border-none`}
             {...register('name', {
               required: 'plese enter your name',
               pattern: {
@@ -36,7 +36,7 @@ const Create = () => {
 
         {/* id */}
         <div className={`${errors.id ? 'mb-10' : 'mb-5'} relative transition-all`}>
-          <input type="text" placeholder="student id" className={`${errors.id ? 'border-red-300' : (watch().id && 'border-green-500')} block h-9 border px-4 rounded-md w-full outline-none focus:bg-neutral-50 dark:bg-neutral-600 dark:border-none`} {...register("id", {
+          <input type="text" placeholder="student id" className={`${errors.id ? 'border-red-300' : (watch().id && 'border-green-500')} block h-9 border px-4 rounded-md w-full outline-none focus:bg-neutral-50 dark:bg-neutral-700 dark:border-none`} {...register("id", {
             required: 'please enter student id', pattern: {
               value: /^.{8}$/i,
               message: 'should be 8 character long'
@@ -49,7 +49,7 @@ const Create = () => {
 
         {/* email */}
         <div className={`${errors.email ? 'mb-10' : 'mb-5'} relative transition-all`}>
-          <input type="email" placeholder="example@g.bracu.ac.bd" className={`${errors.email ? 'border-red-300' : (watch().email && 'border-green-500')} block h-9 border px-4 rounded-md w-full outline-none focus:bg-neutral-50 dark:bg-neutral-600 dark:border-none`} {...register("email", {
+          <input type="email" placeholder="example@g.bracu.ac.bd" className={`${errors.email ? 'border-red-300' : (watch().email && 'border-green-500')} block h-9 border px-4 rounded-md w-full outline-none focus:bg-neutral-50 dark:bg-neutral-700 dark:border-none`} {...register("email", {
             required: 'please enter your email', pattern: {
               value: /^[a-zA-Z0-9._%+-]+@g\.bracu\.ac\.bd$/i,
               message: 'please enter your organization email'
@@ -62,7 +62,7 @@ const Create = () => {
 
         {/* password */}
         <div className={`${errors.password ? 'mb-10' : 'mb-5'} relative transition-all`}>
-          <input type="password" placeholder="••••••••••••" className={`${errors.password ? 'border-red-300' : (watch().password && 'border-green-500')} block h-9 border px-4 rounded-md w-full outline-none focus:bg-neutral-50 dark:bg-neutral-600 dark:border-none`} {...register("password", {
+          <input type="password" placeholder="••••••••••••" className={`${errors.password ? 'border-red-300' : (watch().password && 'border-green-500')} block h-9 border px-4 rounded-md w-full outline-none focus:bg-neutral-50 dark:bg-neutral-700 dark:border-none`} {...register("password", {
             required: 'please create an unique password', pattern: {
               value: /^.{8,}$/i,
               message: 'atleast 8 characters long'
@@ -72,7 +72,7 @@ const Create = () => {
 
         </div>
 
-        <button type="submit" value={"Login"} className="w-full h-9 bg-black text-white rounded-md dark:bg-zinc-600">
+        <button type="submit" value={"Login"} className="w-full h-9 bg-black text-white rounded-md dark:bg-neutral-600">
           Continue
         </button>
       </form>

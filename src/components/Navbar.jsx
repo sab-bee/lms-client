@@ -4,6 +4,7 @@ import Popover from './Popover'
 import Search from './search'
 import { useAuth } from '../utils/auth'
 import { BookOpen, LogOut } from 'lucide-react'
+import Switcher from './switcher'
 
 const Navbar = ({ children }) => {
   const { pathname } = useLocation()
@@ -34,7 +35,8 @@ const Navbar = ({ children }) => {
   }
 
   return (
-    <div className='xl:w-[85%] mx-auto bg-white dark:bg-neutral-800 dark:text-neutral-200' onClick={() => setProfilePop(false)}>
+    <div className='xl:w-[85%] mx-auto bg-white rounded-3xl dark:bg-neutral-800 dark:text-neutral-200 overflow-hidden relative' onClick={() => setProfilePop(false)}>
+      <Switcher />
       {
         pathname.includes('account') || <nav className='w-[80%] mx-auto'>
           <div className='flex justify-between items-center h-28'>

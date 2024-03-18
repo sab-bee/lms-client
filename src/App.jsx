@@ -28,9 +28,7 @@ import Control from './pages/admin/Control';
 function App() {
 
   return (
-    <div className='dark:bg-black'>
-      <Switcher />
-
+    <>
       <AuthProvider>
         <Toaster />
         <Navbar>
@@ -68,7 +66,7 @@ function App() {
           </Routes>
         </Navbar>
       </AuthProvider >
-    </div>
+    </>
   )
 }
 

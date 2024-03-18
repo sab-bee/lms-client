@@ -92,7 +92,7 @@ const Dashbaord = () => {
               <p>Borrowed</p>
               <span>3</span>
             </div>
-            <div className='flex mb-1 justify-between mx-4 border-b pb-2'>
+            <div className='flex mb-1 justify-between mx-4 border-b dark:border-neutral-600 pb-2'>
               <p>Due</p>
               <span>4</span>
             </div>
@@ -107,7 +107,7 @@ const Dashbaord = () => {
         </div>
       </div >
 
-      <div className='divider h- w-[1px] bg-neutral-200'></div>
+      <div className='divider w-[1px] bg-neutral-200 dark:bg-neutral-600'></div>
       <div className='w-[80%]' onClick={() => setIsInbox(false)}>
         <div className='content w-[90%] mx-auto mb-8'>
 

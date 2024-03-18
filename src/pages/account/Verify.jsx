@@ -21,7 +21,7 @@ const Verify = () => {
       <form onSubmit={handleSubmit(onSubmit)} className={` mt-6 `}>
 
         <div className={`${errors.email ? 'mb-10' : 'mb-5'} relative transition-all`}>
-          <input type="email" placeholder="example@g.bracu.ac.bd" className={`${errors.email ? 'border-red-300' : (watch().email && 'border-green-500')} block h-9 border px-4 rounded-md w-full outline-none focus:bg-neutral-50 dark:bg-neutral-600 dark:border-none`} {...register("email", {
+          <input type="email" placeholder="example@g.bracu.ac.bd" className={`${errors.email ? 'border-red-300' : (watch().email && 'border-green-500')} block h-9 border px-4 rounded-md w-full outline-none focus:bg-neutral-50 dark:bg-neutral-700 dark:border-none`} {...register("email", {
             required: 'please enter your email', pattern: {
               value: /^[a-zA-Z0-9._%+-]+@g\.bracu\.ac\.bd$/i,
               message: 'please enter your organization email'
@@ -30,7 +30,7 @@ const Verify = () => {
           <p className={`text-red-500 absolute`}>{errors.email?.message}</p>
         </div>
 
-        <button type="submit" value={"Login"} className="w-full h-9 bg-black text-white rounded-md dark:bg-zinc-600">
+        <button type="submit" value={"Login"} className="w-full h-9 bg-black text-white rounded-md dark:bg-neutral-600">
           send
         </button>
       </form>

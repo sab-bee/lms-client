@@ -44,10 +44,10 @@ const Otp = () => {
 
       {
         timer === 0 ?
-          <button type="submit" value={"Login"} className="w-full h-9 bg-black text-white rounded-md mt-5 dark:bg-zinc-600" onClick={handleResend}>
+          <button type="submit" value={"Login"} className="w-full h-9 bg-black text-white rounded-md mt-5 dark:bg-neutral-600" onClick={handleResend}>
             Resend
           </button> :
-          <button type="submit" value={"Login"} className="w-full h-9 bg-black text-white rounded-md mt-5 dark:bg-zinc-600" onClick={() => handleOtp(otp)}>
+          <button type="submit" value={"Login"} className="w-full h-9 bg-black text-white rounded-md mt-5 dark:bg-neutral-600" onClick={() => handleOtp(otp)}>
             Verify
           </button>
       }
