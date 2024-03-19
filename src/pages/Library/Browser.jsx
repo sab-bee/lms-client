@@ -23,7 +23,7 @@ const Browser = () => {
   return (
     <div className='w-[70%]'>
       <form onSubmit={handleSubmit(onSubmit)} className='flex gap-4 mt-10'>
-        <div className='relative'>
+        <div className='w-1/2'>
           <input type="text" placeholder='write title or the author' className='h-9 border px-4 rounded-md outline-none focus:bg-neutral-50 shadow shadow-[rgba(0,0,0,0.04)] placeholder:-translate-y-[2px] w-full dark:bg-neutral-700 dark:border-neutral-600' {...register('query', {
             required: 'please type something'
           }

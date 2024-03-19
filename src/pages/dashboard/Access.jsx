@@ -10,10 +10,10 @@ const Access = () => {
 
   return (
     <div className='overflow-auto'>
-      <div className="border rounded-xl w-[1000px]">
+      <div className="border dark:border-neutral-500 rounded-xl w-[1000px]">
         <table className="text-left w-full text-sm ">
           <thead>
-            <tr className='grid grid-cols-7 border-b gap-x-4'>
+            <tr className='grid grid-cols-7 border-b dark:border-neutral-500 gap-x-4'>
               <th className='pl-5 font-medium col-span-2'>Name</th>
               <th className='font-medium'>Issue</th>
               <th className='font-medium'>Due Date</th>
@@ -46,7 +46,7 @@ const Access = () => {
 
 const TableRow = ({ value }) => {
   const { issue, due, daysleft, name } = value;
-  return <tr className='grid grid-cols-7 border-b py-2 gap-x-4 items-center'>
+  return <tr className='grid grid-cols-7 border-b dark:border-neutral-600 py-2 gap-x-4 items-center'>
     <td className='pl-5 col-span-2'>{name}</td>
     <td className='' >{issue}</td>
     <td className='' >{due}</td>

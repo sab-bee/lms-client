@@ -1,25 +1,23 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useAuth } from '../../utils/auth';
 import toast from 'react-hot-toast';
+import useBooks from '../../hook/useBooks';
+import { format } from 'date-fns';
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
 
 const Book = ({ book }) => {
   const { book_id, title, author, image, description, edition, genre, stock } = book;
   const { user } = useAuth()
-  const [isRequested, setIsRequested] = useState(false)
+  const { isPending, isBorrowed } = useBooks(book_id)
+  const [isCalendar, setIsCalendar] = useState(false)
+  const [selected, setSelected] = useState();
 
-  useEffect(() => {
-    axios.get(`http://localhost:3001/api/transaction/pending/${user.student_id}`, {
-      headers: {
-        authorization: `bearer ${user.access_token}`
-      }
-    }).then((res) => {
-      const book = res.data.find((book) => book.book_id === book_id)
-      if (book) {
-        setIsRequested(true)
-      }
-    }).catch(err => console.log(err))
-  }, [])
+  let footer = <p>Please pick a day.</p>;
+  if (selected) {
+    footer = <p>You picked {format(selected, 'PP')}.</p>;
+  }
 
   function handleBorrow() {
     axios.post('http://localhost:3001/api/transaction/request', {
@@ -40,6 +38,31 @@ const Book = ({ book }) => {
     })
   }
 
+  function handleRender() {
+    if (isPending) {
+      return <button className='bg-black text-white px-8 py-1 rounded dark:bg-neutral-600 disabled cursor-not-allowed' >pending</button>
+    }
+
+    if (isBorrowed) {
+      return <button className='bg-black text-white px-8 py-1 rounded dark:bg-neutral-600 disabled cursor-not-allowed'>borrowed</button>
+    }
+
+    return <>
+      <button className='block border dark:border-neutral-500 px-2 py-1 rounded-md' onClick={() => setIsCalendar(!isCalendar)} >choose date</button>
+      {
+        isCalendar && <DayPicker
+          className='bg-neutral-100 dark:bg-neutral-700 w-fit p-4 rounded-md'
+          mode="single"
+          selected={selected}
+          onSelect={setSelected}
+          footer={footer}
+        />
+      }
+      <button className='bg-black text-white px-8 py-1 rounded dark:bg-purple-500 ' onClick={handleBorrow}>borrow</button>
+    </>
+
+  }
+
   return (
     <div className='mt-20'>
       <h2 className='text-3xl font-medium'>{title}</h2>
@@ -52,13 +75,10 @@ const Book = ({ book }) => {
           <h2 className='font-medium'>Description</h2>
           <p className='w-[642px]'>{description}</p>
           <p>stock - {stock}</p>
+
           {
-            user.student_id && <>
-              {
-                isRequested ?
-                  <button className='bg-neutral-50 dark:bg-neutral-500 px-8 py-1 rounded border dark:border-neutral-600' disabled >requested</button> :
-                  <button className='bg-black text-white px-8 py-1 rounded dark:bg-neutral-500' onClick={handleBorrow}>borrow</button>
-              }</>
+            // if user is student [not admin]
+            user.student_id && handleRender()
           }
         </div>
       </div>
