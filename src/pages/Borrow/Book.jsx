@@ -3,21 +3,12 @@ import React, { useState } from 'react'
 import { useAuth } from '../../utils/auth';
 import toast from 'react-hot-toast';
 import useBooks from '../../hook/useBooks';
-import { format } from 'date-fns';
-import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 
 const Book = ({ book }) => {
   const { book_id, title, author, image, description, edition, genre, stock } = book;
   const { user } = useAuth()
   const { isPending, isBorrowed } = useBooks(book_id)
-  const [isCalendar, setIsCalendar] = useState(false)
-  const [selected, setSelected] = useState();
-
-  let footer = <p>Please pick a day.</p>;
-  if (selected) {
-    footer = <p>You picked {format(selected, 'PP')}.</p>;
-  }
 
   function handleBorrow() {
     axios.post('http://localhost:3001/api/transaction/request', {
@@ -47,19 +38,7 @@ const Book = ({ book }) => {
       return <button className='bg-black text-white px-8 py-1 rounded dark:bg-neutral-600 disabled cursor-not-allowed'>borrowed</button>
     }
 
-    return <>
-      <button className='block border dark:border-neutral-500 px-2 py-1 rounded-md' onClick={() => setIsCalendar(!isCalendar)} >choose date</button>
-      {
-        isCalendar && <DayPicker
-          className='bg-neutral-100 dark:bg-neutral-700 w-fit p-4 rounded-md'
-          mode="single"
-          selected={selected}
-          onSelect={setSelected}
-          footer={footer}
-        />
-      }
-      <button className='bg-black text-white px-8 py-1 rounded dark:bg-purple-500 ' onClick={handleBorrow}>borrow</button>
-    </>
+    return <button className='bg-black text-white px-8 py-1 rounded dark:bg-purple-500 ' onClick={handleBorrow}>borrow</button>
 
   }
 

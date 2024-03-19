@@ -19,7 +19,7 @@ const Borrow = () => {
       setIsLoading(false)
       setBook(res.data)
     }).catch(err => toast(err.response?.data?.message))
-  }, [])
+  }, [_id])
 
   if (isLoading) {
     console.log('loading')

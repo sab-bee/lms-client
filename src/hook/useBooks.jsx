@@ -11,6 +11,8 @@ const useBooks = (reference_book_id) => {
   const [isBorrowed, setIsBorrowed] = useState(false)
   const [borrowedBooks, setBorrowedBooks] = useState([])
 
+  const [quickBooks, setQuickBooks] = useState([])
+
   useEffect(() => {
 
     // pending books
