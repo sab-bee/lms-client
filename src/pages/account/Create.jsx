@@ -36,8 +36,8 @@ const Create = () => {
 
         {/* id */}
         <div className={`${errors.id ? 'mb-10' : 'mb-5'} relative transition-all`}>
-          <input type="text" placeholder="student id" className={`${errors.id ? 'border-red-300' : (watch().id && 'border-green-500')} block h-9 border px-4 rounded-md w-full outline-none focus:bg-neutral-50 dark:bg-neutral-700 dark:border-none`} {...register("id", {
-            required: 'please enter student id', pattern: {
+          <input type="text" placeholder="user id" className={`${errors.id ? 'border-red-300' : (watch().id && 'border-green-500')} block h-9 border px-4 rounded-md w-full outline-none focus:bg-neutral-50 dark:bg-neutral-700 dark:border-none`} {...register("id", {
+            required: 'please enter user id', pattern: {
               value: /^.{8}$/i,
               message: 'should be 8 character long'
             }

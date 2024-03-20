@@ -1,35 +1,25 @@
-import axios from 'axios'
+import axios from '../../utils/axiosSecured'
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import { useAuth } from '../../utils/auth'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../utils/auth'
 
 const Discover = () => {
 
   const [latestBooks, setLatestBooks] = useState([])
   const [topBooks, setToptBooks] = useState([])
-  // const [latestBooks, setLatestBooks] = useState([])
   const { user } = useAuth()
 
-
   useEffect(() => {
-    axios.get('http://localhost:3001/api/book/list?type=latest&limit=6', {
-      headers: {
-        authorization: `bearer ${user.access_token}`
-      }
-    }).then(res => {
+    axios.get('/book/list?type=latest&limit=6').then(res => {
       setLatestBooks(res.data)
-      axios.get('http://localhost:3001/api/book/list?type=top&limit=6', {
-        headers: {
-          authorization: `bearer ${user.access_token}`
-        }
-      }).then(res => {
+      axios.get('/book/list?type=top&limit=6').then(res => {
         setToptBooks(res.data)
       })
 
     }).catch(err => toast(err.response?.data?.sqlMessage))
-  }, [])
+  }, [user])
 
   return (
     <div className='w-[70%]'>

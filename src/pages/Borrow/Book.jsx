@@ -61,8 +61,6 @@ const Book = ({ book }) => {
           }
         </div>
       </div>
-
-
     </div>
   )
 }

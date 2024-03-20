@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios from '../utils/axiosPublic'
+
 import { createContext, useContext, useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -11,13 +12,13 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate()
 
 
-  useEffect(() => {
-    localStorage.setItem('user', JSON.stringify(user))
-  }, [user])
+  // useEffect(() => {
+  //   localStorage.setItem('user', JSON.stringify(user))
+  // }, [user])
 
   const create = async (input) => {
     try {
-      const res = await axios.post('http://localhost:3001/api/auth/register', input)
+      const res = await axios.post('/auth/register', input)
       toast(res?.data?.message)
       navigate('/account')
 
@@ -51,8 +52,9 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (input) => {
     try {
-      const res = await axios.post('http://localhost:3001/api/auth/login', input)
+      const res = await axios.post('/auth/login', input)
       setUser(res.data)
+      localStorage.setItem('user', JSON.stringify(res.data))
       navigate('/')
     } catch (error) {
       toast(error?.response?.data?.message, {
@@ -62,14 +64,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    const res = await axios.post('http://localhost:3001/api/auth/logout')
+    const res = await axios.post('/auth/logout')
     localStorage.removeItem('user')
     navigate('/account')
   };
 
   const verifyEmail = async (email) => {
     try {
-      const res = await axios.post('http://localhost:3001/api/auth/verifyEmail', email)
+      const res = await axios.post('/auth/verifyEmail', email)
       localStorage.setItem("email", JSON.stringify(email))
       navigate('/account/otp')
     } catch (error) {
@@ -82,7 +84,7 @@ export const AuthProvider = ({ children }) => {
   const otp = async (otp) => {
     const email = JSON.parse(localStorage.getItem('email'))
     try {
-      const res = await axios.post('http://localhost:3001/api/auth/otpCheck', { ...email, otp })
+      const res = await axios.post('/auth/otpCheck', { ...email, otp })
       navigate('/account/setnewpass')
     } catch (error) {
       console.log(error)
@@ -95,7 +97,7 @@ export const AuthProvider = ({ children }) => {
   const setPass = async ({ password }) => {
     const email = JSON.parse(localStorage.getItem('email'))
     try {
-      const res = await axios.post('http://localhost:3001/api/auth/setPass', { ...email, password })
+      const res = await axios.post('/auth/setPass', { ...email, password })
       navigate('/account')
     } catch (error) {
       toast(error?.response?.data?.message, {

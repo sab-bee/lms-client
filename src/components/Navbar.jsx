@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Popover from './Popover'
 import Search from './search'
 import { useAuth } from '../utils/auth'
 import { LogOut } from 'lucide-react'
 import Switcher from './switcher'
-import axios from 'axios'
+import axios from '../utils/axiosSecured'
 
 const Navbar = ({ children }) => {
   const { pathname } = useLocation()
@@ -30,11 +30,7 @@ const Navbar = ({ children }) => {
     setSearchPop(false)
 
     if (value.length > 0) {
-      axios.post(`http://localhost:3001/api/book/quicksearch`, { query: value }, {
-        headers: {
-          authorization: `bearer ${user.access_token}`
-        }
-      }).then((res) => {
+      axios.post(`/book/quicksearch`, { query: value }).then((res) => {
         setQuickBooks(res.data)
         setSearchPop(true);
       }).catch((err) => {
@@ -50,7 +46,7 @@ const Navbar = ({ children }) => {
   }
 
   return (
-    <div className='xl:w-[85%] mx-auto bg-white rounded-3xl dark:bg-neutral-800 dark:text-neutral-200 overflow-hidden relative' onClick={() => setProfilePop(false)}>
+    <div className='xl:w-[85%] mx-auto bg-white rounded-3xl dark:bg-neutral-800 dark:text-neutral-200 overflow-hidden relative shadow-xl select-none' onClick={() => setProfilePop(false)}>
       <Switcher />
       {
         pathname.includes('account') || <nav className='w-[80%] mx-auto'>
@@ -92,16 +88,16 @@ const Navbar = ({ children }) => {
                 {
                   <Popover profilePop={profilePop} firstTime={firstTime}>
 
-                    <div className='border-b px-5 py-2 hover:bg-neutral-50 hover:dark:bg-neutral-800 dark:border-neutral-500'>
+                    <div className='border-b px-5 py-2  dark:border-neutral-500 cursor-default'>
                       <h2>{user?.user_name}</h2>
                       <p>{user?.email}</p>
                     </div>
                     <div className='border-b dark:border-neutral-500'>
-                      <Link to='/profile' className='block hover:bg-neutral-50 px-5 py-2 hover:dark:bg-neutral-800'>Profile</Link>
-                      <Link to='/settings' className='block hover:bg-neutral-50 px-5 py-2 hover:dark:bg-neutral-800'>Settings</Link>
+                      <Link to='/profile' className='block hover:bg-neutral-100 px-5 py-2 hover:dark:bg-neutral-800 rounded-md m-1'>Profile</Link>
+                      <Link to='/settings' className='block hover:bg-neutral-100 px-5 py-2 hover:dark:bg-neutral-800 rounded-md m-1'>Settings</Link>
                     </div>
                     {
-                      user && <button className='px-5 py-2 hover:bg-neutral-50 w-full flex items-center gap-2 hover:dark:bg-neutral-800' onClick={handleLogout}><LogOut size={18} /> Logout</button>
+                      user && <div className='px-5 py-2 hover:bg-neutral-100 flex items-center gap-2 hover:dark:bg-neutral-800 rounded-md m-1' onClick={handleLogout}><LogOut size={18} /> Logout</div>
                     }
                   </Popover>
                 }

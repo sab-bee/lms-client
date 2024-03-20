@@ -23,6 +23,7 @@ import ReadBook from './pages/bookshelf/ReadBook';
 import RequireStudent from './auth/RequireStudent';
 import RequireAdmin from './auth/RequireAdmin';
 import Control from './pages/admin/Control';
+import RequireAuth from './auth/RequireAuth';
 
 
 function App() {
@@ -33,7 +34,7 @@ function App() {
         <Toaster />
         <Navbar>
           <Routes>
-            <Route path='/' element={<Dashbaord />} >
+            <Route path='/' element={<RequireAuth><Dashbaord /></RequireAuth>} >
               <Route path='' element={<Library />}>
                 <Route index element={<Discover />}></Route>
                 <Route path='browser' element={<Browser />}></Route>
