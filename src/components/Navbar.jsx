@@ -5,7 +5,7 @@ import Search from './search'
 import { useAuth } from '../utils/auth'
 import { LogOut } from 'lucide-react'
 import Switcher from './switcher'
-import axios from '../utils/axiosSecured'
+import axios from '../utils/axiosPublic'
 
 const Navbar = ({ children }) => {
   const { pathname } = useLocation()
@@ -30,7 +30,11 @@ const Navbar = ({ children }) => {
     setSearchPop(false)
 
     if (value.length > 0) {
-      axios.post(`/book/quicksearch`, { query: value }).then((res) => {
+      axios.post(`/book/quicksearch`, { query: value }, {
+        headers: {
+          authorization: `bearer ${user.access_token}`
+        }
+      }).then((res) => {
         setQuickBooks(res.data)
         setSearchPop(true);
       }).catch((err) => {
@@ -71,7 +75,7 @@ const Navbar = ({ children }) => {
 
               <Search searchPop={searchPop} firstTimeSearch={firstTimeSearch}>
                 {
-                  quickBooks?.map(({ title, book_id }, i) => <div key={i} className='p-4 hover:bg-neutral-100 hover:dark:bg-neutral-600 cursor-pointer' onClick={() => {
+                  quickBooks?.map(({ title, book_id }, i) => <div key={i} className='p-4 hover:bg-neutral-100 hover:dark:bg-neutral-600 cursor-pointer transition-colors' onClick={() => {
                     setQuickBooks([])
                     navigate(`/borrow/${book_id}`)
                   }}>

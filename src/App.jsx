@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom';
 import Dashbaord from './pages/dashboard/Dashbaord';
 import BookShelf from './pages/bookshelf/BookShelf';
 import Library from './pages/library/Library';
-import AddNew from './pages/admin/AddNew';
 import Account from './pages/account/Account';
 import Login from './pages/account/Login';
 import Create from './pages/account/Create';
@@ -15,15 +14,14 @@ import { Toaster } from 'react-hot-toast';
 import Verify from './pages/account/Verify';
 import Otp from './pages/account/Otp';
 import SetNewPassword from './pages/account/SetNewPassword';
-import Switcher from './components/switcher';
 import Borrow from './pages/borrow/Borrow';
 import Book from './pages/borrow/Book';
 import Discover from './pages/library/Discover';
 import ReadBook from './pages/bookshelf/ReadBook';
 import RequireStudent from './auth/RequireStudent';
 import RequireAdmin from './auth/RequireAdmin';
-import Control from './pages/admin/Control';
 import RequireAuth from './auth/RequireAuth';
+import Manage from './pages/admin/Manage';
 
 
 function App() {
@@ -53,7 +51,7 @@ function App() {
 
               {/* admin routes */}
 
-              <Route path='/control' element={<RequireAdmin><Control /></RequireAdmin>}></Route>
+              <Route path='/manage' element={<RequireAdmin><Manage /></RequireAdmin>}></Route>
             </Route>
 
             <Route path="/account" element={<Account />}>

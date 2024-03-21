@@ -52,7 +52,7 @@ const Dashbaord = () => {
                   <Dashlink className='flex gap-2 items-center mb-1' to='/access' ><Bolt size={18} />Access</Dashlink>
                 </> :
                 <>
-                  <Dashlink className='flex gap-2 items-center mb-1' to='/control' ><Bolt size={18} />Control</Dashlink>
+                  <Dashlink className='flex gap-2 items-center mb-1' to='/manage' ><Bolt size={18} />Manage</Dashlink>
                 </>
             }
           </div>

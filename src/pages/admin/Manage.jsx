@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import axios from '../../utils/axiosSecured'
+import axios from '../../utils/axiosPublic'
+import { useAuth } from '../../utils/auth'
 
-const Control = () => {
+
+const Manage = () => {
   const [books, setBooks] = useState([])
   const [reload, setReload] = useState(false)
+  const { user } = useAuth()
 
   useEffect(() => {
-    axios.post('/transaction/bookbystatus', { status: 'pending' }).then((res) => setBooks(res.data))
+    axios.post('/transaction/bookbystatus', { status: 'pending' }, {
+      headers: {
+        authorization: `bearer ${user.access_token}`
+      }
+    }).then((res) => setBooks(res.data))
   }, [reload])
 
   return (
@@ -25,7 +32,7 @@ const Control = () => {
           </thead>
           <tbody>
             {
-              books.map((book, i) => <TableRow book={book} setReload={setReload} key={i}></TableRow>)
+              books.map((book, i) => <TableRow book={book} setReload={setReload} key={i} user={user}></TableRow>)
             }
           </tbody>
           <tfoot>
@@ -45,18 +52,26 @@ const Control = () => {
 }
 
 
-const TableRow = ({ book, setReload }) => {
+const TableRow = ({ book, setReload, user }) => {
   const { title, book_id, student_id, transaction_id, issue_date, due_date } = book;
 
   const handleApprove = () => {
-    axios.post('/transaction/action', { approve: true, transaction_id, book_id }).then((res) => {
+    axios.post('/transaction/action', { approve: true, transaction_id, book_id }, {
+      headers: {
+        authorization: `bearer ${user.access_token}`
+      }
+    }).then((res) => {
       console.log(res.data)
       setReload(prev => !prev)
     })
   }
 
   const handleDeny = () => {
-    axios.post('/transaction/action', { approve: false, transaction_id, book_id }).then((res) => {
+    axios.post('/transaction/action', { approve: false, transaction_id, book_id }, {
+      headers: {
+        authorization: `bearer ${user.access_token}`
+      }
+    }).then((res) => {
       console.log(res.data)
       setReload(prev => !prev)
     })
@@ -75,4 +90,4 @@ const TableRow = ({ book, setReload }) => {
   </tr>
 }
 
-export default Control
+export default Manage

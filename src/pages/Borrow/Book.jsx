@@ -8,7 +8,7 @@ import 'react-day-picker/dist/style.css';
 const Book = ({ book }) => {
   const { book_id, title, author, image, description, edition, genre, stock } = book;
   const { user } = useAuth()
-  const { isPending, isBorrowed } = useBooks(book_id)
+  const { isPending, isBorrowed, refetch } = useBooks(book_id)
 
   function handleBorrow() {
     axios.post('http://localhost:3001/api/transaction/request', {
@@ -19,10 +19,8 @@ const Book = ({ book }) => {
         authorization: `bearer ${user.access_token}`
       }
     }).then((res) => {
+      refetch()
       toast(res?.data?.message)
-      if (res.status === 200) {
-        setIsRequested(true)
-      }
 
     }).catch((err) => {
       console.log(err)
@@ -31,14 +29,18 @@ const Book = ({ book }) => {
 
   function handleRender() {
     if (isPending) {
-      return <button className='bg-black text-white px-8 py-1 rounded dark:bg-neutral-600 disabled cursor-not-allowed' >pending</button>
+      return <button className='bg-black text-white px-8 py-1 rounded dark:bg-neutral-600 disabled cursor-not-allowed' >Pending</button>
     }
 
     if (isBorrowed) {
-      return <button className='bg-black text-white px-8 py-1 rounded dark:bg-neutral-600 disabled cursor-not-allowed'>borrowed</button>
+      return <button className='bg-black text-white px-8 py-1 rounded dark:bg-neutral-600 disabled cursor-not-allowed'>Borrowed</button>
     }
 
-    return <button className='bg-black text-white px-8 py-1 rounded dark:bg-purple-500 ' onClick={handleBorrow}>borrow</button>
+    if (stock <= 0) {
+      return <button className='bg-black text-white px-8 py-1 rounded dark:bg-purple-500 ' onClick={handleBorrow}>Reserve</button>
+    }
+
+    return <button className='bg-black text-white px-8 py-1 rounded dark:bg-purple-500 ' onClick={handleBorrow}>Borrow</button>
 
   }
 
@@ -53,7 +55,11 @@ const Book = ({ book }) => {
         <div className='justify-self-start space-y-5'>
           <h2 className='font-medium'>Description</h2>
           <p className='w-[642px]'>{description}</p>
-          <p>stock - {stock}</p>
+          <p>
+            {
+              stock <= 0 ? 'out of stock' : `stock - ${ stock }`
+            }
+          </p>
 
           {
             // if user is student [not admin]
