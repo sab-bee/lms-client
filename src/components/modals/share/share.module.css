@@ -1,0 +1,29 @@
+.show {
+  animation: animate 0.2s forwards;
+  box-shadow: rgba(99, 99, 99, 0.123) 0px 2px 2px 0px;
+}
+
+.hide {
+  pointer-events: none;
+  animation: manimate 0.1s forwards;
+}
+
+@keyframes animate {
+  0% {
+    opacity: 0;
+    scale: 0.95;
+  }
+  100% {
+    scale: 1;
+  }
+}
+
+@keyframes manimate {
+  0% {
+    scale: 1;
+  }
+  100% {
+    opacity: 0;
+    scale: 0.95;
+  }
+}

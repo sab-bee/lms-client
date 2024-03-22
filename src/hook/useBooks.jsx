@@ -24,7 +24,7 @@ const useBooks = (reference_book_id) => {
       if (book) {
         setisPending(true)
       }
-    }).catch(err => console.log(err))
+    }).catch(err => '')
 
 
     // borrowed books
@@ -38,7 +38,9 @@ const useBooks = (reference_book_id) => {
       if (book) {
         setIsBorrowed(true)
       }
-    }).catch((err) => console.log(err.response?.data))
+    }).catch((err) => {
+      // console.log(err.response?.data)
+    })
 
   }, [reFetchApi])
 

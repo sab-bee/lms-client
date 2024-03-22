@@ -1,36 +1,35 @@
 import axios from '../../utils/axiosPublic'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../utils/auth'
+import { useQuery } from '@tanstack/react-query'
 
 const Discover = () => {
-
-  const [latestBooks, setLatestBooks] = useState([])
-  const [topBooks, setToptBooks] = useState([])
   const { user } = useAuth()
-
   const [isHovered, setIsHovered] = useState(false)
 
-  useEffect(() => {
-    axios.get('/book/list?type=latest&limit=6', {
+  const fn = async (type, limit) => {
+    const res = await axios.get(`/book/list?type=${type}&limit=${limit}`, {
       headers: {
         authorization: `bearer ${user.access_token}`
       }
-    }).then(res => {
-      setLatestBooks(res.data)
-      axios.get('/book/list?type=top&limit=6', {
-        headers: {
-          authorization: `bearer ${user.access_token}`
-        }
-      }).then(res => {
-        setToptBooks(res.data)
-      })
+    })
+    return res.data
+  }
 
-    }).catch(err => toast(err.response?.data?.sqlMessage))
-  }, [])
+  const { isPending: latestBooksPending, error: latestBooksError, data: latestBooks } = useQuery({
+    queryKey: ['latestBooks'],
+    queryFn: () => fn('latest', 6)
+  })
 
+  const { isPending: popularBooksPending, error: popularBooksError, data: popularBooks } = useQuery({
+    queryKey: ['popularBooks'],
+    queryFn: () => fn('top', 6)
+  })
+
+  if (popularBooksPending || latestBooksPending) return <div>Fetching posts...</div>;
+  if (popularBooksError || latestBooksError) return <div>An error occurred: {error.message}</div>;
 
   return (
     <div className='w-[70%]'>
@@ -45,14 +44,12 @@ const Discover = () => {
         </div>
       </div>
 
-
-
       <div className='mt-8'>
         <h2 className='font-medium text-2xl'>Best Collection</h2>
         <p className=' text-neutral-400 mb-8 border-b dark:border-neutral-600 pb-2'>Top books borroed by students</p>
         <div className='grid grid-cols-4 gap-2'>
           {
-            topBooks.map((book, i) => <SingleBook book={book} key={i} setIsHovered={setIsHovered} isHovered={isHovered}></SingleBook>)
+            popularBooks.map((book, i) => <SingleBook book={book} key={i} setIsHovered={setIsHovered} isHovered={isHovered}></SingleBook>)
           }
         </div>
       </div>
@@ -65,10 +62,9 @@ const SingleBook = ({ book, latest, setIsHovered, isHovered }) => {
 
   const navigate = useNavigate()
 
-
   return (
     <div className={`${latest ? 'w-[200px] flex-shrink-0' : 'w-[150px] min-h-[150px]'} cursor-pointer transition-all group duration-300`} onClick={() => navigate(`/borrow/${book_id}`)} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-      <img src={image} alt="" className={`rounded-md object-cover ${latest ? 'h-[300px] w-[400px]':'h-[200px] w-[300px]'} ${isHovered && 'grayscale opacity-50'} group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300`} />
+      <img src={image} alt="" className={`rounded-md object-cover ${latest ? 'h-[300px] w-[400px]' : 'h-[200px] w-[300px]'} ${isHovered && 'grayscale opacity-50'} group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300`} />
       <h2 className='font-medium mt-2'>{title}</h2>
       <h3>{author}</h3>
     </div>

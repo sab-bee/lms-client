@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import Popover from './Popover'
-import Search from './search'
+import Search from './modals/search/search'
 import { useAuth } from '../utils/auth'
 import { LogOut } from 'lucide-react'
 import Switcher from './switcher'
 import axios from '../utils/axiosPublic'
+import ProfileModal from './modals/profile/ProfileModal'
 
 const Navbar = ({ children }) => {
   const { pathname } = useLocation()
@@ -90,7 +90,7 @@ const Navbar = ({ children }) => {
               <img src="https://picsum.photos/200/300?grayscale" alt="" className='w-9 h-9 rounded-full' />
               <div className='trigger relative'>
                 {
-                  <Popover profilePop={profilePop} firstTime={firstTime}>
+                  <ProfileModal profilePop={profilePop} firstTime={firstTime}>
 
                     <div className='border-b px-5 py-2  dark:border-neutral-500 cursor-default'>
                       <h2>{user?.user_name}</h2>
@@ -103,7 +103,7 @@ const Navbar = ({ children }) => {
                     {
                       user && <div className='px-5 py-2 hover:bg-neutral-100 flex items-center gap-2 hover:dark:bg-neutral-800 rounded-md m-1' onClick={handleLogout}><LogOut size={18} /> Logout</div>
                     }
-                  </Popover>
+                  </ProfileModal>
                 }
               </div>
             </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Dashlink from '../../components/Dashlink'
+import Dashlink from '../../components/links/Dashlink'
 import { Outlet } from 'react-router-dom'
 import { Bolt, BookOpenText, Library as Shelf, Bell } from 'lucide-react';
 import { useAuth } from '../../utils/auth';

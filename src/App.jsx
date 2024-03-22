@@ -15,7 +15,6 @@ import Verify from './pages/account/Verify';
 import Otp from './pages/account/Otp';
 import SetNewPassword from './pages/account/SetNewPassword';
 import Borrow from './pages/borrow/Borrow';
-import Book from './pages/borrow/Book';
 import Discover from './pages/library/Discover';
 import ReadBook from './pages/bookshelf/ReadBook';
 import RequireStudent from './auth/RequireStudent';
@@ -40,14 +39,8 @@ function App() {
               <Route path='/bookshelf' element={<RequireStudent><BookShelf /></RequireStudent>}></Route>
               <Route path='/access' element={<RequireStudent><Access /></RequireStudent>}></Route>
 
-              <Route path='/readbook/:_id' element={<Borrow />}>
-                <Route index element={<ReadBook />}></Route>
-              </Route>
-
-              <Route path='/borrow/:_id' element={<Borrow />}>
-                <Route index element={<Book />}></Route>
-              </Route>
-
+              <Route path='/readbook/:_id' element={<ReadBook />}></Route>
+              <Route path='/borrow/:_id' element={<Borrow />}></Route>
 
               {/* admin routes */}
 
